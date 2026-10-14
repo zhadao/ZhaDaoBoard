@@ -45,7 +45,7 @@
 
 ### 方式 1 · 双击启动（日常使用）
 
-在 [Release](https://github.com/) 下载 `WhiteBoard.exe`（或自行 `npm run release` 生成），双击：
+在 [Releases](https://github.com/zhadao/ZhaDaoBoard/releases) 下载 `WhiteBoard.exe`（或自行 `npm run release` 生成），双击：
 
 - 起一个只监听 `127.0.0.1` 的本地服务并自动打开浏览器，**不需要装 Node、不需要联网**
 - 关掉控制台窗口即停止服务；数据已经写进磁盘，不会丢
