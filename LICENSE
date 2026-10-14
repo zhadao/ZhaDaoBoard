@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2026 zhadao (ZhaDaoBoard / 白板)
+Copyright (c) 2026 zhadao
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,11 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
--------------------------------------------------------------------------------
-
-This project embeds the Excalidraw canvas engine (@excalidraw/excalidraw@0.18.1,
-MIT), React / React DOM (MIT) and react-router-dom (MIT) into its build output,
-and bundles fonts under their own upstream licenses. See
-prototype/THIRD-PARTY-NOTICES.md for the complete list of third-party components
-and their full license texts, which must be kept together with any distribution.
