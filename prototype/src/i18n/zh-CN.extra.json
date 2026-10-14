@@ -1,0 +1,139 @@
+{
+  "_comment": "Excalidraw 0.18.1 的 zh-CN 语言包缺 91 个键（会回退成英文）。本文件由 scripts/excalidraw-patch.mjs 在构建期深度合并进引擎的 zh-CN 模块。",
+  "labels": {
+    "changeStroke": "更改线条颜色",
+    "changeBackground": "更改背景颜色",
+    "arrowhead_crowfoot_many": "鸦爪形（多）",
+    "arrowhead_crowfoot_one": "鸦爪形（单）",
+    "arrowhead_crowfoot_one_or_many": "鸦爪形（单或多）",
+    "more_options": "更多选项",
+    "arrowtypes": "箭头类型",
+    "arrowtype_sharp": "直角箭头",
+    "arrowtype_round": "曲线箭头",
+    "arrowtype_elbowed": "折线箭头",
+    "clearCanvas": "清空画布",
+    "toggleGrid": "切换点阵",
+    "loadScene": "从文件加载场景",
+    "showFonts": "打开字体选择器",
+    "theme": "主题",
+    "link": {
+      "hint": "在此输入或粘贴链接",
+      "goToElement": "跳转到目标元素"
+    },
+    "lineEditor": {
+      "editArrow": "编辑箭头"
+    },
+    "followUs": "关注我们",
+    "discordChat": "Discord 聊天",
+    "zoomToFitViewport": "缩放至适应视口",
+    "zoomToFitSelection": "缩放至适应所选内容",
+    "zoomToFit": "缩放至适应全部元素",
+    "installPWA": "安装为本地应用（PWA）",
+    "autoResize": "启用文字自动缩放",
+    "imageCropping": "图片裁剪",
+    "unCroppedDimension": "未裁剪尺寸",
+    "copyElementLink": "复制对象链接",
+    "linkToElement": "链接到对象",
+    "wrapSelectionInFrame": "将所选内容放入画框",
+    "handDrawn": "普惠体·常规",
+    "normal": "普惠体·中黑",
+    "code": "普惠体·加粗"
+  },
+  "elementLink": {
+    "title": "链接到对象",
+    "desc": "点击画布上的图形，或粘贴一个链接。",
+    "notFound": "画布上未找到被链接的对象。"
+  },
+  "search": {
+    "title": "在画布中查找",
+    "noMatch": "未找到匹配项…",
+    "singleResult": "个结果",
+    "multipleResults": "个结果",
+    "placeholder": "在画布中查找文字…"
+  },
+  "buttons": {
+    "copyLink": "复制链接",
+    "systemMode": "跟随系统"
+  },
+  "errors": {
+    "saveLibraryError": "无法保存素材库。请将素材库导出为文件，以免丢失改动。"
+  },
+  "element": {
+    "rectangle": "矩形",
+    "diamond": "菱形",
+    "ellipse": "椭圆",
+    "arrow": "箭头",
+    "line": "线条",
+    "freedraw": "自由书写",
+    "text": "文字",
+    "image": "图片",
+    "group": "编组",
+    "frame": "画框",
+    "magicframe": "线框图转代码",
+    "embeddable": "嵌入网页",
+    "selection": "选择",
+    "iframe": "内嵌框架"
+  },
+  "hints": {
+    "dismissSearch": "按 Escape 关闭查找",
+    "arrowTool": "点击可创建多点折线，拖拽可创建单条直线。再次按 {{arrowShortcut}} 可切换箭头类型。",
+    "createFlowchart": "按住 CtrlOrCmd 并按方向键可创建流程图",
+    "enterCropEditor": "双击图片或按 Enter 开始裁剪",
+    "leaveCropEditor": "点击图片外部，或按 Enter / Esc 结束裁剪"
+  },
+  "shareDialog": {
+    "or": "或"
+  },
+  "helpDialog": {
+    "createFlowchart": "由普通元素创建流程图",
+    "navigateFlowchart": "在流程图中跳转",
+    "cropStart": "裁剪图片",
+    "cropFinish": "结束图片裁剪"
+  },
+  "stats": {
+    "shapes": "图形",
+    "fullTitle": "画布与图形属性",
+    "generalStats": "常规",
+    "elementProperties": "图形属性"
+  },
+  "toast": {
+    "copyToClipboardAsSvg": "已将{{exportSelection}}以 SVG 复制到剪贴板\n（{{exportColorScheme}}）",
+    "elementLinkCopied": "链接已复制到剪贴板"
+  },
+  "quickSearch": {
+    "placeholder": "快速搜索"
+  },
+  "fontList": {
+    "badge": {
+      "old": "旧"
+    },
+    "sceneFonts": "本场景中",
+    "availableFonts": "可用字体",
+    "empty": "未找到字体"
+  },
+  "userList": {
+    "empty": "暂无用户",
+    "hint": {
+      "text": "点击用户以跟随",
+      "followStatus": "你正在跟随该用户",
+      "inCall": "该用户正在语音通话",
+      "micMuted": "该用户的麦克风已静音",
+      "isSpeaking": "该用户正在发言"
+    }
+  },
+  "commandPalette": {
+    "title": "命令面板",
+    "shortcuts": {
+      "select": "选择",
+      "confirm": "确认",
+      "close": "关闭"
+    },
+    "recents": "最近使用",
+    "search": {
+      "placeholder": "搜索菜单与命令，发现隐藏功能",
+      "noMatch": "没有匹配的命令…"
+    },
+    "itemNotAvailable": "该命令当前不可用…",
+    "shortcutHint": "打开命令面板请按 {{shortcut}}"
+  }
+}

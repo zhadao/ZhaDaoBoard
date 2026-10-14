@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <title>白板 · 本地无限画布</title>
+    <!-- 图标双份：.ico 供 Windows（任务栏/收藏夹/快捷方式）取多尺寸位图，
+         .svg 供现代浏览器取矢量。两者同源，都来自 ZhaDaOBoard 标志。 -->
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" href="/logo.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/logo.svg" />
+    <!-- 首屏主题（外链而非内联：CSP 使用 script-src 'self'） -->
+    <script src="/theme-init.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

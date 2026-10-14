@@ -1,0 +1,1018 @@
+/* ============================================================
+   应用外壳样式 · 白板工具
+   仅使用 tokens.css 中的 --wb-* 令牌
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: var(--wb-font-sans);
+  font-size: var(--wb-text-base);
+  line-height: 1.5;
+  color: var(--wb-text-primary);
+  background: var(--wb-bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+a {
+  color: var(--wb-link);
+  text-decoration: none;
+}
+
+/* 统一的键盘焦点环 */
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--wb-accent-subtle), 0 0 0 4px var(--wb-focus-ring);
+}
+
+/* ---------------- 按钮 ---------------- */
+.wb-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--wb-space-2);
+  height: var(--wb-control-height);
+  padding: 0 12px;
+  border-radius: var(--wb-radius-md);
+  border: 1px solid transparent;
+  background: transparent;
+  font-size: var(--wb-text-base);
+  font-weight: var(--wb-weight-medium);
+  white-space: nowrap;
+  transition: background-color var(--wb-dur-fast) var(--wb-ease),
+    color var(--wb-dur-fast) var(--wb-ease),
+    border-color var(--wb-dur-fast) var(--wb-ease);
+}
+
+.wb-btn svg {
+  width: var(--wb-icon-size);
+  height: var(--wb-icon-size);
+  flex: 0 0 auto;
+}
+
+.wb-btn--primary {
+  background: var(--wb-accent);
+  color: var(--wb-text-on-accent);
+}
+.wb-btn--primary:hover {
+  background: var(--wb-accent-hover);
+}
+.wb-btn--primary:active {
+  background: var(--wb-accent-active);
+}
+
+.wb-btn--secondary {
+  background: var(--wb-surface);
+  color: var(--wb-text-primary);
+  border-color: var(--wb-border);
+}
+.wb-btn--secondary:hover {
+  background: var(--wb-surface-hover);
+  border-color: var(--wb-border-strong);
+}
+.wb-btn--secondary:active {
+  background: var(--wb-surface-active);
+}
+
+.wb-btn--ghost {
+  color: var(--wb-text-secondary);
+  padding: 0 10px;
+}
+.wb-btn--ghost:hover {
+  background: var(--wb-surface-hover);
+  color: var(--wb-text-primary);
+}
+.wb-btn--ghost:active {
+  background: var(--wb-surface-active);
+}
+
+.wb-btn--icon {
+  width: var(--wb-control-height);
+  height: var(--wb-control-height);
+  padding: 0;
+  color: var(--wb-text-secondary);
+}
+.wb-btn--icon:hover {
+  background: var(--wb-surface-hover);
+  color: var(--wb-text-primary);
+}
+.wb-btn--icon:active {
+  background: var(--wb-surface-active);
+}
+
+.wb-btn--danger {
+  background: var(--wb-danger-hover);
+  color: var(--wb-text-on-danger);
+}
+.wb-btn--danger:hover {
+  filter: brightness(0.92);
+}
+
+/* ---------------- 输入框 ---------------- */
+.wb-input {
+  height: var(--wb-control-height);
+  padding: 0 10px;
+  border: 1px solid var(--wb-border);
+  border-radius: var(--wb-radius-md);
+  background: var(--wb-surface);
+  color: var(--wb-text-primary);
+  font-size: var(--wb-text-sm);
+  transition: border-color var(--wb-dur-fast) var(--wb-ease),
+    box-shadow var(--wb-dur-fast) var(--wb-ease);
+}
+.wb-input::placeholder {
+  color: var(--wb-text-tertiary);
+}
+.wb-input:hover {
+  border-color: var(--wb-border-strong);
+}
+.wb-input:focus {
+  outline: none;
+  border-color: var(--wb-accent);
+  box-shadow: 0 0 0 3px var(--wb-accent-subtle);
+}
+
+/* ============================================================
+   外壳布局：小侧边栏 + 大画布
+   ============================================================ */
+.wb-shell {
+  display: flex;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+/* ---------------- 侧边栏 ---------------- */
+.wb-sidebar {
+  flex: 0 0 240px;
+  width: 240px;
+  min-width: 0;
+  background: var(--wb-surface);
+  border-right: 1px solid var(--wb-border);
+  overflow: hidden;
+  transition: flex-basis var(--wb-dur-base) var(--wb-ease),
+    width var(--wb-dur-base) var(--wb-ease);
+}
+.wb-sidebar--collapsed {
+  flex-basis: 0;
+  width: 0;
+  border-right-color: transparent;
+}
+
+/* 固定内宽，折叠动画时不回流 */
+.wb-sidebar-inner {
+  width: 240px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.wb-sidebar-head {
+  display: flex;
+  align-items: center;
+  gap: var(--wb-space-2);
+  height: var(--wb-topbar-height);
+  padding: 0 var(--wb-space-2) 0 var(--wb-space-4);
+  flex: 0 0 auto;
+}
+/* 品牌标记：与 exe 图标、标签页图标同一个 public/logo.svg */
+.wb-brand-mark {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+  border-radius: var(--wb-radius-sm);
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.wb-sidebar-title {
+  font-size: var(--wb-text-lg);
+  font-weight: var(--wb-weight-semibold);
+  color: var(--wb-text-primary);
+  /* 把「新建」按钮顶到最右侧（头部有三个子元素，不能用 space-between） */
+  margin-right: auto;
+}
+/* 侧边栏「新建」：纯文字按钮，避免图标尺寸/基线对齐问题 */
+.wb-sidebar-new {
+  height: 26px;
+  padding: 0 10px;
+  font-size: var(--wb-text-sm);
+  font-weight: var(--wb-weight-medium);
+}
+
+.wb-sidebar-count {
+  margin-left: var(--wb-space-2);
+  font-size: var(--wb-text-xs);
+  font-weight: var(--wb-weight-medium);
+  color: var(--wb-text-tertiary);
+}
+
+/* 连接失败横幅（后端不可用时显示，恢复后自动消失） */
+.wb-sidebar-error {
+  flex: 0 0 auto;
+  margin: 0 var(--wb-space-3) var(--wb-space-2);
+  padding: var(--wb-space-2) var(--wb-space-3);
+  border: 1px solid var(--wb-border);
+  border-left: 3px solid var(--wb-warning);
+  border-radius: var(--wb-radius-md);
+  background: var(--wb-surface-hover);
+  color: var(--wb-text-secondary);
+}
+.wb-sidebar-error-text {
+  font-size: var(--wb-text-xs);
+  line-height: 1.5;
+}
+.wb-sidebar-error-retry {
+  margin-top: var(--wb-space-2);
+  height: 26px;
+  padding: 0 8px;
+  font-size: var(--wb-text-xs);
+}
+
+.wb-sidebar-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--wb-space-3) var(--wb-space-2);
+  flex: 0 0 auto;
+}
+.wb-sidebar-search svg {
+  position: absolute;
+  left: calc(var(--wb-space-3) + 10px);
+  width: var(--wb-icon-size);
+  height: var(--wb-icon-size);
+  color: var(--wb-text-tertiary);
+  pointer-events: none;
+}
+.wb-sidebar-search .wb-input {
+  width: 100%;
+  padding-left: 32px;
+}
+
+.wb-sidebar-list {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--wb-space-1) var(--wb-space-2) var(--wb-space-2);
+}
+.wb-sidebar-hint {
+  padding: var(--wb-space-4) var(--wb-space-3);
+  font-size: var(--wb-text-sm);
+  color: var(--wb-text-tertiary);
+}
+
+.wb-sidebar-foot {
+  flex: 0 0 auto;
+  padding: var(--wb-space-2) var(--wb-space-3);
+  border-top: 1px solid var(--wb-border-subtle);
+}
+.wb-sidebar-theme {
+  display: flex;
+  align-items: center;
+  gap: var(--wb-space-2);
+  width: 100%;
+  height: var(--wb-control-height);
+  padding: 0 8px;
+  border: none;
+  border-radius: var(--wb-radius-md);
+  background: transparent;
+  color: var(--wb-text-secondary);
+  font-size: var(--wb-text-base);
+  text-align: left;
+  transition: background-color var(--wb-dur-fast) var(--wb-ease),
+    color var(--wb-dur-fast) var(--wb-ease);
+}
+.wb-sidebar-theme svg {
+  width: var(--wb-icon-size);
+  height: var(--wb-icon-size);
+}
+.wb-sidebar-theme:hover {
+  background: var(--wb-surface-hover);
+  color: var(--wb-text-primary);
+}
+
+/* ---------------- 侧边栏行 ---------------- */
+.wb-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--wb-space-2);
+  min-height: 40px;
+  padding: 0 30px 0 var(--wb-space-2);
+  border-radius: var(--wb-radius-md);
+  cursor: pointer;
+  transition: background-color var(--wb-dur-fast) var(--wb-ease);
+}
+.wb-row:hover {
+  background: var(--wb-surface-hover);
+}
+.wb-row--active {
+  background: var(--wb-accent-subtle);
+}
+.wb-row:focus-visible {
+  box-shadow: 0 0 0 2px var(--wb-accent-subtle), 0 0 0 4px var(--wb-focus-ring);
+}
+
+.wb-row-thumb {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--wb-radius-sm);
+  background: var(--wb-surface-sunken);
+  border: 1px solid var(--wb-border-subtle);
+  color: var(--wb-text-tertiary);
+  overflow: hidden;
+}
+.wb-row-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.wb-row-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1 1 auto;
+  line-height: 1.25;
+}
+.wb-row-name {
+  font-size: var(--wb-text-base);
+  font-weight: var(--wb-weight-medium);
+  color: var(--wb-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.wb-row-time {
+  font-size: var(--wb-text-xs);
+  font-weight: var(--wb-weight-medium);
+  color: var(--wb-text-tertiary);
+}
+
+.wb-row-menu-btn {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--wb-radius-sm);
+  background: transparent;
+  color: var(--wb-text-secondary);
+  opacity: 0;
+  transition: opacity var(--wb-dur-fast) var(--wb-ease),
+    background-color var(--wb-dur-fast) var(--wb-ease);
+}
+.wb-row:hover .wb-row-menu-btn,
+.wb-row-menu-btn:focus-visible,
+.wb-row-menu-btn[data-open="true"] {
+  opacity: 1;
+}
+.wb-row-menu-btn:hover {
+  background: var(--wb-surface-active);
+  color: var(--wb-text-primary);
+}
+
+/* 行内编辑 / 删除确认 */
+.wb-row--editing {
+  min-height: 0;
+  padding: var(--wb-space-1) var(--wb-space-2);
+  background: transparent;
+}
+.wb-row-input {
+  width: 100%;
+}
+.wb-row--confirming {
+  display: block;
+  min-height: 0;
+  padding: var(--wb-space-2);
+  background: var(--wb-surface-hover);
+}
+.wb-row-confirm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--wb-space-2);
+}
+.wb-row-confirm span {
+  font-size: var(--wb-text-sm);
+  color: var(--wb-text-secondary);
+}
+.wb-row-confirm-actions {
+  display: flex;
+  gap: var(--wb-space-2);
+}
+.wb-row-confirm-actions .wb-btn {
+  flex: 1;
+  height: 28px;
+}
+
+/* ---------------- 主区 ---------------- */
+.wb-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--wb-bg);
+  position: relative;
+}
+
+/* ---------------- 下拉 / 右键菜单 ---------------- */
+.wb-menu {
+  position: absolute;
+  top: 34px;
+  right: var(--wb-space-2);
+  z-index: var(--wb-z-dropdown);
+  min-width: 168px;
+  padding: 4px;
+  background: var(--wb-surface-raised);
+  border: 1px solid var(--wb-border);
+  border-radius: var(--wb-radius-lg);
+  box-shadow: var(--wb-shadow-md);
+}
+.wb-menu--floating {
+  position: fixed;
+  top: auto;
+  right: auto;
+}
+.wb-menu-item {
+  display: flex;
+  align-items: center;
+  gap: var(--wb-space-2);
+  width: 100%;
+  height: 30px;
+  padding: 0 8px;
+  border: none;
+  border-radius: var(--wb-radius-sm);
+  background: transparent;
+  color: var(--wb-text-primary);
+  font-size: var(--wb-text-base);
+  text-align: left;
+}
+.wb-menu-item svg {
+  width: var(--wb-icon-size);
+  height: var(--wb-icon-size);
+  color: var(--wb-text-tertiary);
+  flex: 0 0 auto;
+}
+.wb-menu-item:hover {
+  background: var(--wb-surface-hover);
+}
+.wb-menu-item:hover svg {
+  color: var(--wb-text-secondary);
+}
+.wb-menu-item--danger {
+  color: var(--wb-danger-hover);
+}
+.wb-menu-item--danger svg {
+  color: var(--wb-danger-hover);
+}
+.wb-menu-item--danger:hover {
+  background: var(--wb-danger-subtle);
+}
+.wb-menu-sep {
+  height: 1px;
+  margin: 4px 0;
+  background: var(--wb-border-subtle);
+}
+
+/* ---------------- 主题三态菜单（顶栏 + 侧边栏共用） ---------------- */
+.wb-theme-anchor {
+  position: relative;
+  display: inline-flex;
+}
+.wb-sidebar-foot .wb-theme-anchor {
+  display: flex;
+  width: 100%;
+}
+.wb-theme-menu {
+  min-width: 176px;
+}
+/* 侧边栏底部：向上弹，否则会被视口下沿裁掉 */
+.wb-menu--up {
+  top: auto;
+  bottom: calc(100% + 6px);
+}
+.wb-theme-trigger-label {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+/* 勾选标记常驻占位（只是隐藏），保证三行文字左对齐 */
+.wb-theme-menu-item .wb-menu-check {
+  margin-left: auto;
+  color: var(--wb-accent);
+  opacity: 0;
+}
+.wb-theme-menu-item[aria-checked="true"] .wb-menu-check {
+  opacity: 1;
+}
+
+/* ---------------- 空状态 ---------------- */
+.wb-empty {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--wb-space-16) var(--wb-space-6);
+}
+/* 只作用于空状态顶部的大插图；用 > 限定，避免污染按钮内的图标 */
+.wb-empty > svg {
+  width: 48px;
+  height: 48px;
+  color: var(--wb-text-tertiary);
+  margin-bottom: var(--wb-space-5);
+}
+.wb-empty h2 {
+  margin: 0 0 var(--wb-space-2);
+  font-size: var(--wb-text-xl);
+  font-weight: var(--wb-weight-semibold);
+  color: var(--wb-text-primary);
+}
+.wb-empty p {
+  margin: 0 0 var(--wb-space-6);
+  font-size: var(--wb-text-sm);
+  color: var(--wb-text-secondary);
+}
+
+/* ============================================================
+   编辑器（主区内的顶栏 + 画布）
+   ============================================================ */
+.wb-editor {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.wb-topbar {
+  flex: 0 0 auto;
+  height: var(--wb-topbar-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--wb-space-3);
+  padding: 0 var(--wb-space-3);
+  background: var(--wb-surface-raised);
+  border-bottom: 1px solid var(--wb-border);
+  box-shadow: var(--wb-shadow-sm);
+  z-index: var(--wb-z-sticky);
+}
+.wb-topbar-left,
+.wb-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: var(--wb-space-2);
+  min-width: 0;
+}
+.wb-topbar-right {
+  position: relative;
+}
+
+.wb-board-name {
+  display: inline-flex;
+  align-items: center;
+  max-width: 42vw;
+  height: 28px;
+  padding: 0 8px;
+  border: 1px solid transparent;
+  border-radius: var(--wb-radius-sm);
+  background: transparent;
+  font-size: var(--wb-text-lg);
+  font-weight: var(--wb-weight-semibold);
+  color: var(--wb-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.wb-board-name:hover {
+  background: var(--wb-surface-hover);
+}
+.wb-board-name-input {
+  height: 28px;
+  max-width: 42vw;
+  font-size: var(--wb-text-lg);
+  font-weight: var(--wb-weight-semibold);
+}
+
+.wb-save-dot {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--wb-space-2);
+  margin-left: var(--wb-space-1);
+  padding: 0 6px;
+  font-size: var(--wb-text-xs);
+  font-weight: var(--wb-weight-medium);
+  color: var(--wb-text-tertiary);
+  user-select: none;
+}
+.wb-save-dot span.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--wb-text-tertiary);
+  transition: background-color var(--wb-dur-base) var(--wb-ease);
+}
+.wb-save-dot[data-state="saved"] span.dot {
+  background: var(--wb-success);
+}
+.wb-save-dot[data-state="error"] span.dot {
+  background: var(--wb-danger);
+}
+.wb-save-dot[data-state="readonly"] span.dot {
+  background: var(--wb-warning);
+}
+.wb-save-dot[data-state="error"] {
+  color: var(--wb-danger-hover);
+}
+/* 保存失败时小圆点变成可点击的「重试」 */
+.wb-save-dot--action {
+  border: none;
+  background: transparent;
+  border-radius: var(--wb-radius-sm);
+  transition: background-color var(--wb-dur-fast) var(--wb-ease);
+}
+.wb-save-dot--action:hover {
+  background: var(--wb-danger-subtle);
+}
+.wb-save-dot-retry {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* 画布容器：顶栏之下占满剩余空间，显式高度避免 0 高。
+   底色由外壳提供，引擎画布被设为透明，点阵层夹在两者之间。 */
+.wb-canvas {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--wb-canvas-bg);
+}
+.wb-canvas .excalidraw {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+  /* 引擎画布本身必须透明，否则会盖住点阵层 */
+  background: transparent;
+}
+.wb-canvas .excalidraw__canvas-wrapper,
+.wb-canvas .excalidraw__canvas {
+  background: transparent;
+}
+
+/* ---------------- 点阵背景（外壳自绘） ----------------
+   位置与点距由 useDotGrid 通过 --wb-dot-step / --wb-dot-x / --wb-dot-y 驱动，
+   与引擎的视口映射 screen = (scene + scroll) * zoom 保持一致。 */
+.wb-dotgrid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  background-image: radial-gradient(circle, var(--wb-dot-color) 0.9px, transparent 1.1px);
+  background-size: var(--wb-dot-step, 20px) var(--wb-dot-step, 20px);
+  background-position: var(--wb-dot-x, 0) var(--wb-dot-y, 0);
+  transition: opacity var(--wb-dur-base) var(--wb-ease);
+}
+.wb-dotgrid[data-enabled="true"] {
+  opacity: 1;
+}
+/* 缩得太小时屏幕点距不足 6px，继续画只会糊成一片灰 */
+.wb-dotgrid[data-dense="true"] {
+  opacity: 0;
+}
+
+/* ---------------- 视图设置弹层（点阵 / 吸附 / 间距） ---------------- */
+.wb-view-menu {
+  min-width: 236px;
+  padding: var(--wb-space-2);
+}
+.wb-view-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--wb-space-3);
+  height: 32px;
+  padding: 0 var(--wb-space-2);
+  border-radius: var(--wb-radius-sm);
+  cursor: pointer;
+}
+.wb-view-row:hover {
+  background: var(--wb-surface-hover);
+}
+.wb-view-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--wb-space-2);
+  font-size: var(--wb-text-base);
+  color: var(--wb-text-primary);
+}
+.wb-view-label svg {
+  width: var(--wb-icon-size);
+  height: var(--wb-icon-size);
+  color: var(--wb-text-tertiary);
+  flex: 0 0 auto;
+}
+.wb-view-hint {
+  margin: var(--wb-space-2) var(--wb-space-2) 0;
+  font-size: var(--wb-text-xs);
+  line-height: 1.5;
+  color: var(--wb-text-tertiary);
+}
+
+.wb-select {
+  height: 26px;
+  padding: 0 6px;
+  border: 1px solid var(--wb-border);
+  border-radius: var(--wb-radius-sm);
+  background: var(--wb-surface);
+  color: var(--wb-text-primary);
+  font-size: var(--wb-text-sm);
+  transition: border-color var(--wb-dur-fast) var(--wb-ease);
+}
+.wb-select:hover {
+  border-color: var(--wb-border-strong);
+}
+
+/* 开关（复选框外观替换，保持原生键盘与无障碍语义） */
+.wb-switch {
+  position: relative;
+  flex: 0 0 auto;
+  width: 34px;
+  height: 20px;
+  margin: 0;
+  border-radius: var(--wb-radius-pill);
+  background: var(--wb-surface-active);
+  appearance: none;
+  cursor: pointer;
+  transition: background-color var(--wb-dur-fast) var(--wb-ease);
+}
+.wb-switch::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--wb-surface);
+  box-shadow: var(--wb-shadow-xs);
+  transition: transform var(--wb-dur-fast) var(--wb-ease);
+}
+.wb-switch:checked {
+  background: var(--wb-accent);
+}
+.wb-switch:checked::after {
+  transform: translateX(14px);
+}
+
+/* ---------------- 纯本地：隐藏所有联网入口 ----------------
+   这些控件被引擎硬编码，无法通过 props 关闭，只能从界面上摘掉；
+   真正的硬约束是 server.cjs 下发的 CSP（connect-src 'self' / frame-src 'none'），
+   即使有人绕过界面，请求也发不出去。 */
+.wb-canvas .library-menu-browse-button,
+.wb-canvas .library-menu [data-testid="lib-dropdown--remove"],
+.wb-canvas [data-testid="toolbar-embeddable"] {
+  display: none !important;
+}
+
+/* 字体下拉：所有家族都被别名到普惠体，列出来只会让人困惑，只留三个字重按钮 */
+.wb-canvas .FontPicker__container > :nth-child(n + 2) {
+  display: none !important;
+}
+
+/* 快捷键帮助面板顶部的 4 个外链按钮（官方文档 / 博客 / GitHub Issues / YouTube）。
+   快捷键本身全部保留——只摘掉这些会把用户带离本工具的链接。
+   注意：帮助面板是挂到 document.body 的 portal，不在 .wb-canvas 里，选择器不能加前缀。
+   外链只存在于 .HelpDialog__header 里（见引擎 index.js 的 PL 组件）。 */
+.HelpDialog__header {
+  display: none !important;
+}
+
+/* 嵌入网页的占位（renderEmbeddable 替换掉 iframe，见 BoardEditor） */
+.wb-embed-blocked {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: var(--wb-space-2);
+  border: 1px dashed var(--wb-border-strong);
+  border-radius: var(--wb-radius-sm);
+  color: var(--wb-text-tertiary);
+  font-size: var(--wb-text-xs);
+  text-align: center;
+}
+
+.wb-loading {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--wb-text-tertiary);
+  font-size: var(--wb-text-sm);
+}
+/* 载入失败：文案 + 重试按钮竖排 */
+.wb-loading--block {
+  flex-direction: column;
+  gap: var(--wb-space-4);
+  padding: var(--wb-space-6);
+  text-align: center;
+}
+
+/* 编辑器顶栏下拉菜单（导出 / 更多） */
+.wb-topbar .wb-menu {
+  top: calc(var(--wb-topbar-height) - 4px);
+  right: var(--wb-space-2);
+}
+
+/* ---------------- 响应式（≥1024 保底） ---------------- */
+@media (max-width: 1024px) {
+  .wb-board-name,
+  .wb-board-name-input {
+    max-width: 30vw;
+  }
+}
+
+/* ---------------- 命令面板 ---------------- */
+.wb-palette-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--wb-z-modal);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 12vh var(--wb-space-4) var(--wb-space-6);
+  background: var(--wb-overlay);
+  backdrop-filter: blur(1px);
+}
+.wb-palette {
+  display: flex;
+  flex-direction: column;
+  width: min(720px, 100%);
+  max-height: min(560px, 72vh);
+  overflow: hidden;
+  background: var(--wb-surface-raised);
+  border: 1px solid var(--wb-border);
+  border-radius: var(--wb-radius-lg);
+  box-shadow: var(--wb-shadow-lg);
+}
+.wb-palette-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  padding: 0 var(--wb-space-4);
+  border-bottom: 1px solid var(--wb-border-subtle);
+}
+.wb-palette-search svg {
+  position: absolute;
+  left: var(--wb-space-4);
+  width: var(--wb-icon-size);
+  height: var(--wb-icon-size);
+  color: var(--wb-text-tertiary);
+  pointer-events: none;
+}
+.wb-palette-input {
+  width: 100%;
+  height: 48px;
+  padding: 0 0 0 28px;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--wb-text-primary);
+  font-family: inherit;
+  font-size: var(--wb-text-lg);
+}
+.wb-palette-input::placeholder {
+  color: var(--wb-text-tertiary);
+}
+.wb-palette-list {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--wb-space-2);
+}
+.wb-palette-group + .wb-palette-group {
+  margin-top: var(--wb-space-2);
+}
+.wb-palette-group-title {
+  padding: var(--wb-space-2) var(--wb-space-3) 4px;
+  font-size: var(--wb-text-xs);
+  font-weight: var(--wb-weight-medium);
+  color: var(--wb-text-tertiary);
+}
+.wb-palette-item {
+  display: flex;
+  align-items: center;
+  gap: var(--wb-space-3);
+  width: 100%;
+  height: 34px;
+  padding: 0 var(--wb-space-3);
+  border: none;
+  border-radius: var(--wb-radius-md);
+  background: transparent;
+  color: var(--wb-text-primary);
+  font-size: var(--wb-text-base);
+  text-align: left;
+  cursor: pointer;
+}
+.wb-palette-item[aria-selected="true"] {
+  background: var(--wb-surface-hover);
+}
+.wb-palette-item[data-disabled="true"] {
+  color: var(--wb-text-disabled);
+  cursor: default;
+}
+.wb-palette-item[data-disabled="true"][aria-selected="true"] {
+  background: transparent;
+}
+.wb-palette-item-label {
+  flex: 1 1 auto;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.wb-palette-shortcut {
+  display: inline-flex;
+  gap: 4px;
+  flex: 0 0 auto;
+}
+.wb-palette-shortcut kbd,
+.wb-palette-hint kbd {
+  min-width: 20px;
+  padding: 2px 5px;
+  border: 1px solid var(--wb-border);
+  border-radius: var(--wb-radius-sm);
+  background: var(--wb-surface);
+  color: var(--wb-text-secondary);
+  font-family: var(--wb-font-mono);
+  font-size: var(--wb-text-xs);
+  line-height: 1.3;
+  text-align: center;
+}
+.wb-palette-empty {
+  padding: var(--wb-space-8) var(--wb-space-4);
+  text-align: center;
+  color: var(--wb-text-tertiary);
+  font-size: var(--wb-text-sm);
+}
+.wb-palette-foot {
+  display: flex;
+  align-items: center;
+  gap: var(--wb-space-4);
+  flex: 0 0 auto;
+  padding: var(--wb-space-2) var(--wb-space-4);
+  border-top: 1px solid var(--wb-border-subtle);
+}
+.wb-palette-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--wb-text-tertiary);
+  font-size: var(--wb-text-xs);
+}
+.wb-palette-hint--muted {
+  margin-left: auto;
+  font-family: var(--wb-font-mono);
+}
+
+/* 尊重用户降低动效偏好 */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

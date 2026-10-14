@@ -1,0 +1,21 @@
+{
+  "_comment": "引擎字体家族 → 普惠体字重的映射。server.cjs 与 vite.config.ts 共用，保证引擎请求的任何 /fonts/** 路径都命中本地普惠体，永不回退到 esm.sh。",
+  "weights": {
+    "regular": "fonts/puhuiti/regular.woff2",
+    "medium": "fonts/puhuiti/medium.woff2",
+    "bold": "fonts/puhuiti/bold.woff2"
+  },
+  "families": {
+    "Virgil": "regular",
+    "Excalifont": "regular",
+    "ComicShanns": "regular",
+    "Xiaolai": "regular",
+    "Assistant": "regular",
+    "Helvetica": "medium",
+    "Nunito": "medium",
+    "Liberation": "medium",
+    "Lilita": "medium",
+    "Cascadia": "bold"
+  },
+  "fallback": "regular"
+}

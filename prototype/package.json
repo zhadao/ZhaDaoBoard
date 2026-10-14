@@ -1,0 +1,44 @@
+{
+  "name": "whiteboard-prototype",
+  "private": true,
+  "version": "0.4.0",
+  "type": "module",
+  "description": "个人本地白板工具 · Excalidraw 引擎 + 本地 Node 服务器（数据全在 prototype/data/ 一个文件夹）",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "dev:vite": "vite",
+    "build": "vite build",
+    "build:fonts": "node scripts/build-fonts.mjs",
+    "build:icon": "node scripts/build-icon.mjs",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "lint": "node scripts/lint.mjs",
+    "test": "node --test",
+    "check": "node scripts/check.mjs",
+    "audit:upstream": "node scripts/audit-upstream.mjs",
+    "verify:offline": "node scripts/verify-offline.mjs",
+    "verify:browser": "node scripts/verify-browser.mjs",
+    "verify:exe": "node scripts/verify-exe.mjs",
+    "server": "node server/server.cjs",
+    "start": "node server/server.cjs",
+    "serve": "npm run build && node server/server.cjs",
+    "build:exe": "node scripts/build-exe.mjs",
+    "release": "node scripts/build-exe.mjs && node scripts/package-release.mjs",
+    "dist": "node scripts/build-exe.mjs && node scripts/package-dist.mjs"
+  },
+  "dependencies": {
+    "@excalidraw/excalidraw": "0.18.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.2",
+    "postject": "^1.0.0-alpha.6",
+    "resedit": "^3.1.0",
+    "typescript": "^5.6.2",
+    "vite": "^5.4.8"
+  }
+}

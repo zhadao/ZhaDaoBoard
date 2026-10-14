@@ -1,0 +1,157 @@
+/* ============================================================
+   设计令牌 · 白板工具应用外壳
+   来源：DESIGN.md v1.0（方案 A · Linear + Notion 留白 + Excalidraw 血统）
+   所有颜色/间距/圆角/阴影均取自设计系统，不即兴造值。
+   ============================================================ */
+
+:root {
+  /* ---- 浅色主题 ---- */
+  /* 背景层级 */
+  --wb-bg: #f5f5f5;
+  --wb-surface: #ffffff;
+  --wb-surface-raised: #ffffff;
+  --wb-surface-sunken: #ececec;
+  --wb-surface-hover: #f5f5f5;
+  --wb-surface-active: #ebebeb;
+
+  /* 文字层级 */
+  --wb-text-primary: #1b1b1f;
+  --wb-text-secondary: #5c5c5c;
+  --wb-text-tertiary: #7a7a7a;
+  --wb-text-disabled: #b8b8b8;
+  --wb-text-on-accent: #ffffff;
+  --wb-text-on-danger: #ffffff;
+
+  /* 边框 */
+  --wb-border: #e3e3e3;
+  --wb-border-strong: #d6d6d6;
+  --wb-border-subtle: #ebebeb;
+
+  /* 强调色（唯一彩色 · indigo/violet） */
+  --wb-accent: #6965db;
+  --wb-accent-hover: #5b57d1;
+  --wb-accent-active: #4a47b1;
+  --wb-accent-subtle: #e9e8fb;
+  --wb-focus-ring: #6965db;
+  --wb-link: #5b57d1;
+
+  /* 语义色 */
+  --wb-danger: #db6965;
+  --wb-danger-hover: #ce3c3c;
+  --wb-danger-subtle: #fbeceb;
+  --wb-success: #5bb98c;
+  --wb-warning: #d6a24a;
+
+  /* 字体（优先本地普惠体，见 src/fonts.ts） */
+  --wb-font-sans: "PuHuiTi", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", "Noto Sans CJK SC",
+    "Source Han Sans SC", "WenQuanYi Micro Hei", sans-serif;
+  --wb-font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+
+  /* 画布（引擎画布透明，底色由外壳提供，点阵层夹在两者之间） */
+  --wb-canvas-bg: #ffffff;
+  --wb-dot-color: #c9c9c9;
+
+  /* 字号 */
+  --wb-text-2xl: 1.5rem; /* 24px */
+  --wb-text-xl: 1.125rem; /* 18px */
+  --wb-text-lg: 0.9375rem; /* 15px */
+  --wb-text-base: 0.875rem; /* 14px */
+  --wb-text-sm: 0.8125rem; /* 13px */
+  --wb-text-xs: 0.75rem; /* 12px */
+  --wb-weight-regular: 400;
+  --wb-weight-medium: 500;
+  --wb-weight-semibold: 600;
+
+  /* 间距 */
+  --wb-space-1: 4px;
+  --wb-space-2: 8px;
+  --wb-space-3: 12px;
+  --wb-space-4: 16px;
+  --wb-space-5: 20px;
+  --wb-space-6: 24px;
+  --wb-space-8: 32px;
+  --wb-space-10: 40px;
+  --wb-space-12: 48px;
+  --wb-space-16: 64px;
+
+  /* 圆角 */
+  --wb-radius-sm: 4px;
+  --wb-radius-md: 6px;
+  --wb-radius-lg: 8px;
+  --wb-radius-xl: 12px;
+  --wb-radius-pill: 999px;
+
+  /* 阴影（克制） */
+  --wb-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --wb-shadow-sm: 0 0 1px rgba(0, 0, 0, 0.17), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --wb-shadow-md: 0 0 1px rgba(0, 0, 0, 0.12), 0 4px 12px -2px rgba(0, 0, 0, 0.1);
+  --wb-shadow-lg: 0 0 1px rgba(0, 0, 0, 0.12),
+    0 12px 28px -6px rgba(0, 0, 0, 0.14);
+
+  /* 模态遮罩（命令面板等） */
+  --wb-overlay: rgba(0, 0, 0, 0.28);
+
+  /* 尺寸 */
+  --wb-icon-size: 16px;
+  --wb-control-height: 32px;
+  --wb-topbar-height: 44px;
+
+  /* Z-index */
+  --wb-z-base: 0;
+  --wb-z-sticky: 100;
+  --wb-z-dropdown: 200;
+  --wb-z-modal: 300;
+  --wb-z-toast: 400;
+
+  /* 动效 */
+  --wb-dur-fast: 120ms;
+  --wb-dur-base: 180ms;
+  --wb-ease: cubic-bezier(0.2, 0, 0, 1);
+}
+
+[data-theme="dark"] {
+  --wb-bg: #121212;
+  --wb-surface: #1e1e1e;
+  --wb-surface-raised: #232329;
+  --wb-surface-sunken: #121212;
+  --wb-surface-hover: #2c2c2c;
+  --wb-surface-active: #383838;
+
+  --wb-text-primary: #e3e3e8;
+  --wb-text-secondary: #a8a8a8;
+  --wb-text-tertiary: #7a7a7a;
+  --wb-text-disabled: #5c5c5c;
+  --wb-text-on-accent: #1b1b1f;
+  --wb-text-on-danger: #ffffff;
+
+  --wb-border: #2c2c2c;
+  --wb-border-strong: #383838;
+  --wb-border-subtle: #232329;
+
+  --wb-accent: #a8a5ff;
+  --wb-accent-hover: #b2b2f0;
+  --wb-accent-active: #c0beff;
+  --wb-accent-subtle: #2b2a45;
+  --wb-focus-ring: #a8a5ff;
+  --wb-link: #a8a5ff;
+
+  --wb-danger: #db6965;
+  --wb-danger-hover: #e0837f;
+  --wb-danger-subtle: #3a2323;
+  --wb-success: #5bb98c;
+  --wb-warning: #d6a24a;
+
+  --wb-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --wb-shadow-sm: 0 0 1px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.4);
+  --wb-shadow-md: 0 0 1px rgba(0, 0, 0, 0.5), 0 4px 12px -2px rgba(0, 0, 0, 0.45);
+  --wb-shadow-lg: 0 0 1px rgba(0, 0, 0, 0.5),
+    0 12px 28px -6px rgba(0, 0, 0, 0.5);
+
+  --wb-overlay: rgba(0, 0, 0, 0.5);
+
+  --wb-canvas-bg: #121212;
+  --wb-dot-color: #3d3d3d;
+}
